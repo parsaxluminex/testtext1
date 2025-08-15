@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>دفترچه یادداشت</title>
+  <style>
+    body {
+      font-family: 'Vazir', sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: #eee;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      direction: rtl;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #app {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="login">
+      <h2>ورود به دفترچه</h2>
+      <input type="password" id="password" placeholder="رمز عبور را وارد کنید">
+      <button onclick="checkPassword()">ورود</button>
+    </div>
+
+    <div id="app">
+      <h2>دفترچه یادداشت</h2>
+      <textarea id="note" placeholder="یادداشت خود را بنویسید..."></textarea>
+      <button onclick="saveNote()">ذخیره</button>
+      <button onclick="clearNote()">پاک کردن</button>
+      <button onclick="toggleDarkMode()">حالت شب/روز</button>
+    </div>
+  </div>
+
+  <script>
+    const correctPassword = "1234";
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        loadNote();
+      } else {
+        alert("رمز اشتباه است!");
+      }
+    }
+
+    function saveNote() {
+      const note = document.getElementById("note").value;
+      localStorage.setItem("note", note);
+      alert("یادداشت ذخیره شد!");
+    }
+
+    function loadNote() {
+      const saved = localStorage.getItem("note");
+      if (saved) {
+        document.getElementById("note").value = saved;
+      }
+    }
+
+    function clearNote() {
+      document.getElementById("note").value = "";
+      localStorage.removeItem("note");
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>
